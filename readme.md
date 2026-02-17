@@ -22,6 +22,12 @@ Transforma servidores isolados em um Cluster de Failover. Focado em **Observabil
 ### 🔹 Fase 3: Compliance & Patching (WSUS) - *Novo*
 O mais novo pilar do lab. Este módulo instala o **Windows Server Update Services** e provisiona automaticamente as **GPOs** de atualização. Isso garante que todos os servidores do lab (simulando um parque de 300+) estejam em conformidade com as últimas correções de segurança.
 
+## 🔹 Fase 4: Shared Storage & Linux (Cross-Platform)
+Módulo focado em interoperabilidade entre Windows e Linux.
+* **Linux iSCSI Target:** Uso de **LVM** (Logical Volume Manager) para criação de **LUNs** em um servidor Linux.
+* **Storage Networking:** Implementação de protocolo iSCSI para prover o *Shared Storage* necessário para o Quórum e CSV (Cluster Shared Volumes) do Hyper-V.
+* **Multipath I/O (MPIO):** Preparado para configurações de alta redundância de caminhos de dados.
+
 ---
 
 ## 🚀 Como Executar o Deploy Completo
