@@ -31,25 +31,7 @@ ___________________________
                                +-----------------------------+               [ SERVIÇO WSUS ]
                                                                              (Patch Management)
 
-        graph TD
-    subgraph "Storage Layer (Linux)"
-        ST[Linux iSCSI Target] -- LUNs/iSCSI --> CL
-    end
-
-    subgraph "Identity Layer (Windows Server)"
-        AD1[DC-01 Principal] <--> AD2[DC-02 Réplica]
-    end
-
-    subgraph "Compute Layer (Failover Cluster)"
-        CL[Hyper-V Cluster]
-        N1[Node 01] --- CL
-        N2[Node 02] --- CL
-        WSUS[WSUS Server] -. Updates .-> N1
-        WSUS -. Updates .-> N2
-    end
-
-    AD1 -- Auth/DNS --> CL
-    AD1 -- GPO --> WSUS                                                                     
+                                                              
 
 ## 🛠️ Módulos Integrados
 
