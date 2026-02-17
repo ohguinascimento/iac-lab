@@ -11,6 +11,26 @@ Este lab automatiza o ciclo de vida completo da infraestrutura, dividindo-se em 
 
 ---
 
+___________________________
+                                |       REDES / DNS         |
+                                |___________________________|
+                                              |
+       _______________________________________|_______________________________________
+      |                                       |                                       |
+ [ LINUX STORAGE ]                     [ ACTIVE DIRECTORY ]                    [ HYPER-V CLUSTER ]
+  (iSCSI Target)                       (Identidade/DNS)                        (Virtualização)
+ +---------------+              +-----------------------------+              +-----------------------+
+ |  LUN 01 (CSV) | <---iSCSI--- | DC-01 (Principal)           | <---Auth--- | NODE-01 (Hypervisor)  |
+ |  LVM / Target |              | [AD DS, DNS, GPO]           |             | [Cluster Service]     |
+ |  Ubuntu/Rocky |              +-----------------------------+              +-----------------------+
+ +---------------+                             |                             +-----------------------+
+                                   (Replicação de NTDS)                      | NODE-02 (Hypervisor)  |
+                               +-----------------------------+               | [Cluster Service]     |
+                               | DC-02 (Réplica)             | <---Auth--- +-----------------------+
+                               | [AD DS, DNS]                |                        |
+                               +-----------------------------+               [ SERVIÇO WSUS ]
+                                                                             (Patch Management)
+
 ## 🛠️ Módulos Integrados
 
 ### 🔹 Fase 1: Core & Resilience (Active Directory)
