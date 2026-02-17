@@ -1,34 +1,33 @@
-# 🚀 Windows Full-Stack Lab Automation (IaC)
+# 🚀 Windows Full-Stack Infrastructure-as-Code (IaC) Lab
 
-Este repositório é um framework completo de **Infraestrutura como Código** para o provisionamento automatizado de um ambiente Microsoft corporativo resiliente. Ele orquestra desde a fundação do Active Directory até a alta disponibilidade com Clusters Hyper-V e gestão de patches com WSUS.
+Este repositório é o **Orquestrador Mestre** de um framework completo de infraestrutura automatizada. Ele utiliza o conceito de **Modularidade** para provisionar um ambiente Microsoft corporativo resiliente, integrando Identidade, Alta Disponibilidade e Governança de Updates.
 
-## 📌 Arquitetura do Laboratório
-O objetivo é sair de servidores "Workgroup" para uma infraestrutura pronta para produção com:
-* **Redundância de Domínio:** 2 Domain Controllers com replicação ativa.
-* **Alta Disponibilidade (HA):** Cluster de Failover Hyper-V validado.
-* **Governança:** Servidor WSUS centralizado com políticas de grupo (GPO) automatizadas.
+## 📌 Arquitetura do Ecossistema
+Este lab automatiza o ciclo de vida completo da infraestrutura, dividindo-se em três pilares fundamentais:
 
----
-
-## 🛠️ Módulos de Automação
-
-### Fase 1: Core Identity (Active Directory)
-Localizado em `/01-ActiveDirectory`, este módulo lida com a criação da floresta e a replicação do segundo DC para garantir que a identidade e o DNS nunca fiquem offline.
-
-### Fase 2: Virtualização & HA (Hyper-V Cluster)
-Localizado em `/02-HyperV-Cluster`, este módulo prepara os hosts e orquestra a criação do Cluster.
-* **Destaque:** Inclui *Pre-flight checks* de DNS para garantir que o **Cluster Name Object (CNO)** seja registrado sem erros.
-
-### Fase 3: Gestão de Ciclo de Vida (WSUS)
-Localizado em `/03-Management-Services`, instala o WSUS e aplica GPOs via script para que todos os novos servidores do lab sejam reportados e atualizados automaticamente.
+1.  **[Identity (AdDS)](https://github.com/ohguinascimento/AdDS):** Fundação da floresta Active Directory com replicação entre Domain Controllers.
+2.  **[High Availability (Hyper-V)](https://github.com/ohguinascimento/hyperv):** Configuração de hosts e criação de Clusters de Failover com validações proativas de DNS.
+3.  **[Governance (WSUS)](https://github.com/ohguinascimento/wsus):** Gestão centralizada de atualizações e automação de políticas de grupo (GPO).
 
 ---
 
-## 🚀 Como Iniciar o Lab
+## 🛠️ Módulos Integrados
 
-1. **Requisitos:** 2 VMs com Windows Server (IPs estáticos e comunicação de rede ativa).
-2. **Orquestração:** Você pode executar os scripts individualmente ou usar o `Master-Orchestrator.ps1` para guiar o deploy.
+### 🔹 Fase 1: Core & Resilience (Active Directory)
+Implementa a base de autenticação. O diferencial deste módulo é a **Replicação Automática**, garantindo que o ambiente não possua pontos únicos de falha (SPOF).
+
+### 🔹 Fase 2: Virtualization & SRE (Hyper-V Cluster)
+Transforma servidores isolados em um Cluster de Failover. Focado em **Observabilidade**, o script realiza *pre-flight checks* para garantir a integridade do registro do Cluster no DNS/AD.
+
+### 🔹 Fase 3: Compliance & Patching (WSUS) - *Novo*
+O mais novo pilar do lab. Este módulo instala o **Windows Server Update Services** e provisiona automaticamente as **GPOs** de atualização. Isso garante que todos os servidores do lab (simulando um parque de 300+) estejam em conformidade com as últimas correções de segurança.
+
+---
+
+## 🚀 Como Executar o Deploy Completo
+
+Utilize o `Master-Orchestrator.ps1` contido neste repositório para baixar e executar os módulos diretamente do GitHub:
 
 ```powershell
-# Exemplo: Executando a fase de Cluster após o AD estar online
-.\02-HyperV-Cluster\02-New-FailoverCluster.ps1 -ClusterName "LAB-CLUSTER" -Nodes "SRV-01","SRV-02" -StaticIP "10.0.0.50"
+# Inicie o orquestrador como Administrador
+.\Master-Orchestrator.ps1
