@@ -12,6 +12,7 @@ Este lab automatiza o ciclo de vida completo da infraestrutura, dividindo-se em 
 ---
 
 ___________________________
+___________________________
                                 |       REDES / DNS         |
                                 |___________________________|
                                               |
